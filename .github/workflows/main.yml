@@ -4,11 +4,17 @@ on:
   push:
     branches:
       - "main"
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - 
+        uses: actions/checkout@v2
+      - 
+        name: Tag and push current repo code
+        run: |
+          git tag ${{github.run_id}}
+          git push origin ${{github.run_id}}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -21,6 +27,7 @@ jobs:
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       -
         name: Build and push
         uses: docker/build-push-action@v4
